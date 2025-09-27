@@ -1,0 +1,64 @@
+# ----------------------
+# BUILD OUTPUT
+# ----------------------
+target/
+build/
+out/
+*.jar
+*.war
+*.ear
+*.log
+
+# ----------------------
+# MAVEN
+# ----------------------
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# ----------------------
+# GRADLE (se aplicável)
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ----------------------
+# IDEs
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse / STS
+.project
+.classpath
+.settings/
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VSCode
+.vscode/
+
+# ----------------------
+# SISTEMA / TEMP
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# ARQUIVOS SENSÍVEIS
+application.properties
+application.yml
+.env

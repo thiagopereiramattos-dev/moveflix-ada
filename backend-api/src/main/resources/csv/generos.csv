@@ -1,0 +1,13 @@
+"id_genero","no_genero","no_genero_normalizado","desc_genero"
+1,"Ação","ACAO","Filmes com muita ação, lutas e perseguições"
+2,"Comédia","COMEDIA","Filmes voltados para o humor e entretenimento leve"
+3,"Drama","DRAMA","Histórias com foco emocional e desenvolvimento de personagens"
+4,"Terror","TERROR","Filmes que causam medo, tensão ou suspense"
+5,"Ficção Científica","FICCAO_CIENTIFICA","Filmes com temas científicos, tecnológicos ou futuristas"
+6,"Romance","ROMANCE","Histórias centradas em relacionamentos amorosos"
+7,"Animação","ANIMACAO","Filmes produzidos por técnicas de animação"
+8,"Fantasia","FANTASIA","Filmes com elementos mágicos, mundos imaginários ou mitológicos"
+9,"Documentário","DOCUMENTARIO","Produções que retratam fatos ou realidades de forma informativa"
+10,"Suspense","SUSPENSE","Filmes que mantêm o espectador em constante tensão e mistério"
+11,"Anime","ANIME","Animes Japoneses"
+
