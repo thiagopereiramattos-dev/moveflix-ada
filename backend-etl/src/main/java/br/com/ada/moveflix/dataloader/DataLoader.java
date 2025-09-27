@@ -8,6 +8,7 @@ import br.com.ada.moveflix.service.etl.GeneroETLService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,15 +19,21 @@ public class DataLoader implements CommandLineRunner {
     private final FilmeService filmeService;
     private final FilmeETLService filmeETLService;
     private final DatamartViewService datamartViewService;
-
     private final GeneroETLService generoETLService;
+    private final ConfigurableApplicationContext context;
 
-    public DataLoader(GeneroService generoService,FilmeService filmeService,FilmeETLService filmeETLService,GeneroETLService generoETLService, DatamartViewService datamartViewService ) {
+    public DataLoader(GeneroService generoService,
+                      FilmeService filmeService,
+                      FilmeETLService filmeETLService,
+                      GeneroETLService generoETLService,
+                      DatamartViewService datamartViewService,
+                      ConfigurableApplicationContext context) {
         this.generoService = generoService;
         this.filmeService = filmeService;
         this.filmeETLService = filmeETLService;
         this.generoETLService = generoETLService;
         this.datamartViewService = datamartViewService;
+        this.context = context;
     }
 
     @Override
@@ -45,6 +52,8 @@ public class DataLoader implements CommandLineRunner {
 
         datamartViewService.atualizarViewsDB(); // NOVO
         logger.info("✅ Views do datamart atualizadas com sucesso");
+
+        context.close();
     }
 }
 
