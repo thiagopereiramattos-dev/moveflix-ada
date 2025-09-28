@@ -28,7 +28,9 @@ public class DatamartViewServiceImpl implements  DatamartViewService{
                     : "sql/datamart_views_db.sql";
 
             var resource = new ClassPathResource(sqlFile);
-            String sql = Files.readString(resource.getFile().toPath(), StandardCharsets.UTF_8);
+            
+            // Lendo o conteúdo do arquivo dentro do JAR via InputStream
+            String sql = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
 
             for (String statement : sql.split(";")) {
                 if (!statement.trim().isEmpty()) {
