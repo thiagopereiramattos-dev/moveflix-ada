@@ -8,10 +8,13 @@ import br.com.ada.moveflix.service.etl.GeneroETLService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("!test")
 public class DataLoader implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
@@ -50,10 +53,13 @@ public class DataLoader implements CommandLineRunner {
         filmeETLService.executarETL();
         logger.info("✅ ETL de Filmes finalizado com sucesso");
 
-        datamartViewService.atualizarViewsDB(); // NOVO
+        datamartViewService.atualizarViewsDB();
         logger.info("✅ Views do datamart atualizadas com sucesso");
 
-        context.close();
+        logger.info("🛑 Finalizando aplicação...");
+
+        // Fecha o contexto do Spring e encerra a JVM com código de saída 0 (sucesso)
+        int exitCode = SpringApplication.exit(context, () -> 0);
+        System.exit(exitCode);
     }
 }
-
