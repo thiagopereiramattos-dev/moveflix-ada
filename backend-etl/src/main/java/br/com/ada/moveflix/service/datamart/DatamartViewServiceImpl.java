@@ -5,11 +5,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 @Service
-public class DatamartViewServiceImpl implements  DatamartViewService{
+public class DatamartViewServiceImpl implements DatamartViewService {
 
     private final JdbcTemplate jdbcTemplate;
     private final Environment environment;
@@ -19,22 +19,25 @@ public class DatamartViewServiceImpl implements  DatamartViewService{
         this.environment = environment;
     }
 
-
     @Override
     public void atualizarViewsDB() {
         try {
+            // Escolhe o arquivo SQL conforme o perfil ativo
             String sqlFile = environment.acceptsProfiles("test")
                     ? "sql/datamart_views_db_h2.sql"
                     : "sql/datamart_views_db.sql";
 
-            var resource = new ClassPathResource(sqlFile);
-            
-            // Lendo o conteúdo do arquivo dentro do JAR via InputStream
-            String sql = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            ClassPathResource resource = new ClassPathResource(sqlFile);
 
-            for (String statement : sql.split(";")) {
-                if (!statement.trim().isEmpty()) {
-                    jdbcTemplate.execute(statement);
+            // Usa InputStream para ler o arquivo dentro do JAR ou sistema de arquivos
+            try (InputStream inputStream = resource.getInputStream()) {
+                String sql = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+
+                // Executa cada comando SQL separado por ";"
+                for (String statement : sql.split(";")) {
+                    if (!statement.trim().isEmpty()) {
+                        jdbcTemplate.execute(statement);
+                    }
                 }
             }
 
