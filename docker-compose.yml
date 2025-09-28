@@ -28,6 +28,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     networks:
       - moveflix-network
+    restart: "no"
 
   backend-api:
     build:
@@ -40,12 +41,13 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
     ports:
-      - "8080:8080" # ou outro se preferir
+      - "8080:8080"
     networks:
       - moveflix-network
-      
-   nginx:
+
+  nginx:
     image: nginx:latest
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
