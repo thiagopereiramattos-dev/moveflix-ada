@@ -22,17 +22,21 @@ jobs:
 
       # Build e Teste do backend-api
       - name: Build backend-api
-        run: mvn clean package --file backend-api/pom.xml
+        working-directory: backend-api
+        run: mvn clean package
 
       - name: Test backend-api
-        run: mvn test --file backend-api/pom.xml -Dspring.profiles.active=test
+        working-directory: backend-api
+        run: mvn test -Dspring.profiles.active=test
 
       # Build e Teste do backend-etl
       - name: Build backend-etl
-        run: mvn clean package --file backend-etl/pom.xml
+        working-directory: backend-etl
+        run: mvn clean package
 
       - name: Test backend-etl
-        run: mvn test --file backend-etl/pom.xml -Dspring.profiles.active=test
+        working-directory: backend-etl
+        run: mvn test -Dspring.profiles.active=test
 
   build-and-push-docker:
     needs: build-test
