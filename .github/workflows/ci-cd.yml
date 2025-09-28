@@ -17,14 +17,22 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'   # Corrigido: distribuição obrigatória
+          distribution: 'temurin'
           java-version: '17'
 
-      - name: Build with Maven
+      # Build e Teste do backend-api
+      - name: Build backend-api
         run: mvn clean package --file backend-api/pom.xml
 
-      - name: Run tests
-        run: mvn test --file backend-api/pom.xml
+      - name: Test backend-api
+        run: mvn test --file backend-api/pom.xml -Dspring.profiles.active=test
+
+      # Build e Teste do backend-etl
+      - name: Build backend-etl
+        run: mvn clean package --file backend-etl/pom.xml
+
+      - name: Test backend-etl
+        run: mvn test --file backend-etl/pom.xml -Dspring.profiles.active=test
 
   build-and-push-docker:
     needs: build-test

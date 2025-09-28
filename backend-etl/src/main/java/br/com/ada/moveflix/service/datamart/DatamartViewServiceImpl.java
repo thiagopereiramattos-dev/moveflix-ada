@@ -1,5 +1,6 @@
 package br.com.ada.moveflix.service.datamart;
 
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -11,19 +12,34 @@ import java.nio.file.Files;
 public class DatamartViewServiceImpl implements  DatamartViewService{
 
     private final JdbcTemplate jdbcTemplate;
+    private final Environment environment;
 
-    public DatamartViewServiceImpl(JdbcTemplate jdbcTemplate) {
+    public DatamartViewServiceImpl(JdbcTemplate jdbcTemplate, Environment environment) {
         this.jdbcTemplate = jdbcTemplate;
+        this.environment = environment;
     }
+
+
     @Override
     public void atualizarViewsDB() {
         try {
-            var resource = new ClassPathResource("sql/datamart_views_db.sql");
+            String sqlFile = environment.acceptsProfiles("test")
+                    ? "sql/datamart_views_db_h2.sql"
+                    : "sql/datamart_views_db.sql";
+
+            var resource = new ClassPathResource(sqlFile);
             String sql = Files.readString(resource.getFile().toPath(), StandardCharsets.UTF_8);
-            jdbcTemplate.execute(sql);
+
+            for (String statement : sql.split(";")) {
+                if (!statement.trim().isEmpty()) {
+                    jdbcTemplate.execute(statement);
+                }
+            }
+
             System.out.println("✅ Views do datamart criadas ou atualizadas com sucesso!");
         } catch (Exception e) {
             System.err.println("❌ Erro ao atualizar views do datamart: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
