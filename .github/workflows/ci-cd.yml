@@ -74,7 +74,28 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push backend-api image
+      - name: Build backend-api image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend-api
+          push: false
+          tags: thiagomattos20/backend-api:latest
+
+      - name: Test backend-api container
+        run: |
+          docker run -d --name backend-api-test -p 8080:8080 thiagomattos20/backend-api:latest
+          echo "⏳ Aguardando backend-api subir..."
+          for i in {1..10}; do
+            if curl --fail http://localhost:8080/actuator/health; then
+              echo "✅ API está respondendo!"
+              break
+            fi
+            echo "⏳ Tentando novamente..."
+            sleep 5
+          done
+          docker rm -f backend-api-test
+
+      - name: Push backend-api image
         uses: docker/build-push-action@v4
         with:
           context: ./backend-api
