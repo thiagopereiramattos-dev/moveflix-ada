@@ -59,6 +59,8 @@ Thumbs.db
 
 # ----------------------
 # ARQUIVOS SENSÍVEIS
-application.properties
 application.yml
 .env
+
+# Ignora arquivos application.properties na raiz, mas não nos módulos
+/application.properties
