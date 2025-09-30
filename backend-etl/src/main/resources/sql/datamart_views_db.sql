@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS datamart.filmes_ultimos_5_anos CASCADE;
+
 DROP VIEW IF EXISTS datamart.filmes_ultimos_5_anos CASCADE;
 
 CREATE OR REPLACE VIEW datamart.filmes_ultimos_5_anos AS
-SELECT 
+SELECT
     f.co_filme AS id_filme,
     f.no_filme AS nome_filme,
     f.ano_lancamento,
@@ -17,12 +17,11 @@ ORDER BY f.ano_lancamento DESC, f.media_avaliacoes DESC;
 ALTER VIEW datamart.filmes_ultimos_5_anos OWNER TO postgres;
 
 
--- quantidade_filmes_ultimos_5_anos
-DROP TABLE IF EXISTS datamart.quantidade_filmes_ultimos_5_anos CASCADE;
+
 DROP VIEW IF EXISTS datamart.quantidade_filmes_ultimos_5_anos CASCADE;
 
 CREATE OR REPLACE VIEW datamart.quantidade_filmes_ultimos_5_anos AS
-SELECT 
+SELECT
     ano_lancamento,
     count(*) AS quantidade
 FROM warehouse.filme
@@ -33,11 +32,11 @@ ORDER BY ano_lancamento DESC;
 ALTER VIEW datamart.quantidade_filmes_ultimos_5_anos OWNER TO postgres;
 
 
-DROP TABLE IF EXISTS datamart.top3_filmes_por_genero CASCADE;
+
 DROP VIEW IF EXISTS datamart.top3_filmes_por_genero CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top3_filmes_por_genero AS
-SELECT 
+SELECT
     id_genero,
     genero,
     id_filme,
@@ -45,7 +44,7 @@ SELECT
     media_avaliacoes,
     posicao
 FROM (
-    SELECT 
+    SELECT
         f.id_genero,
         g.no_genero AS genero,
         f.co_filme AS id_filme,
@@ -61,11 +60,11 @@ WHERE posicao <= 3;
 ALTER VIEW datamart.top3_filmes_por_genero OWNER TO postgres;
 
 
-DROP TABLE IF EXISTS datamart.top10_filmes_por_genero CASCADE;
+
 DROP VIEW IF EXISTS datamart.top10_filmes_por_genero CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top10_filmes_por_genero AS
-SELECT 
+SELECT
     id_genero,
     genero,
     id_filme,
@@ -73,7 +72,7 @@ SELECT
     media_avaliacoes,
     posicao
 FROM (
-    SELECT 
+    SELECT
         f.id_genero,
         g.no_genero AS genero,
         f.co_filme AS id_filme,
@@ -89,11 +88,11 @@ WHERE posicao <= 10;
 ALTER VIEW datamart.top10_filmes_por_genero OWNER TO postgres;
 
 
-DROP TABLE IF EXISTS datamart.top15_melhores_avaliados CASCADE;
+
 DROP VIEW IF EXISTS datamart.top15_melhores_avaliados CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top15_melhores_avaliados AS
-SELECT 
+SELECT
     f.co_filme AS id_filme,
     f.no_filme AS nome_filme,
     f.media_avaliacoes,
@@ -109,11 +108,11 @@ LIMIT 15;
 ALTER VIEW datamart.top15_melhores_avaliados OWNER TO postgres;
 
 
-DROP TABLE IF EXISTS datamart.top20_filmes_maior_duracao CASCADE;
+
 DROP VIEW IF EXISTS datamart.top20_filmes_maior_duracao CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top20_filmes_maior_duracao AS
-SELECT 
+SELECT
     f.co_filme AS id_filme,
     f.no_filme AS nome_filme,
     f.id_genero,
@@ -129,11 +128,11 @@ LIMIT 20;
 ALTER VIEW datamart.top20_filmes_maior_duracao OWNER TO postgres;
 
 
-DROP TABLE IF EXISTS datamart.top30_filmes_mais_novos CASCADE;
+
 DROP VIEW IF EXISTS datamart.top30_filmes_mais_novos CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top30_filmes_mais_novos AS
-SELECT 
+SELECT
     co_filme AS id_filme,
     no_filme AS nome_filme,
     ano_lancamento,
