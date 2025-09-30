@@ -90,7 +90,7 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/moveflix
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: adminadmin
-        run: java -Dspring.profiles.active=ci -jar target/*.jar
+        run: java -Dspring.profiles.active=ci -Dapp.exit.on.complete=true -jar target/*.jar
 
       - name: Save backend-etl jar
         uses: actions/upload-artifact@v4

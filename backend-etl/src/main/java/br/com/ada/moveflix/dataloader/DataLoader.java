@@ -69,9 +69,11 @@ public class DataLoader implements CommandLineRunner {
         logger.info("🛑 Finalizando aplicação...");
         logger.info("🔍 Profile ativo: {}", System.getProperty("spring.profiles.active"));
 
-        // Fecha o contexto do Spring e encerra a JVM com código de saída 0 (sucesso)
-        int exitCode = SpringApplication.exit(context, () -> 0);
-        System.exit(exitCode);
+//        String shouldExit = System.getProperty("app.exit.on.complete");
+//        if ("true".equalsIgnoreCase(shouldExit)) {
+//            int exitCode = SpringApplication.exit(context, () -> 0);
+//            System.exit(exitCode);
+//        }
 
 //        if (!"test".equals(System.getProperty("spring.profiles.active")) && (!"ci".equals(System.getProperty("spring.profiles.active")))) {
 //            // Fecha o contexto do Spring e encerra a JVM com código de saída 0 (sucesso)
@@ -79,5 +81,31 @@ public class DataLoader implements CommandLineRunner {
 //            System.exit(exitCode);
 //            //SpringApplication.exit(context, () -> 0);
 //        }
+
+        String activeProfile = System.getProperty("spring.profiles.active");
+        String shouldExit = System.getProperty("app.exit.on.complete");
+
+        logger.info("🔍 Profile ativo: {}", activeProfile);
+
+        if ("test".equalsIgnoreCase(activeProfile)) {
+            logger.info("🧪 Modo de teste detectado. Não será feito System.exit().");
+            return;
+        }
+
+        if ("true".equalsIgnoreCase(shouldExit)) {
+            logger.info("🚪 Encerrando aplicação via app.exit.on.complete=true");
+            int exitCode = SpringApplication.exit(context, () -> 0);
+            System.exit(exitCode);
+        }
+
+        if ("ci".equalsIgnoreCase(activeProfile)) {
+            logger.info("⚙️ Profile CI detectado, mas sem encerramento forçado. Continuando execução normalmente.");
+            return;
+        }
+
+        logger.info("🛑 Encerrando aplicação por estar fora de ambiente de testes e CI.");
+        int exitCode = SpringApplication.exit(context, () -> 0);
+        System.exit(exitCode);
+
     }
 }
