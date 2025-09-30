@@ -39,6 +39,15 @@ jobs:
             sleep 2
           done
 
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Run init.sql to create schemas
+        env:
+          PGPASSWORD: adminadmin
+        run: |
+          psql -h localhost -U postgres -d moveflix -f ./init.sql
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
