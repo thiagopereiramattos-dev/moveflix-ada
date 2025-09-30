@@ -69,11 +69,15 @@ public class DataLoader implements CommandLineRunner {
         logger.info("🛑 Finalizando aplicação...");
         logger.info("🔍 Profile ativo: {}", System.getProperty("spring.profiles.active"));
 
-        if (!"test".equals(System.getProperty("spring.profiles.active")) && (!"ci".equals(System.getProperty("spring.profiles.active")))) {
-            // Fecha o contexto do Spring e encerra a JVM com código de saída 0 (sucesso)
-            int exitCode = SpringApplication.exit(context, () -> 0);
-            System.exit(exitCode);
-            //SpringApplication.exit(context, () -> 0);
-        }
+        // Fecha o contexto do Spring e encerra a JVM com código de saída 0 (sucesso)
+        int exitCode = SpringApplication.exit(context, () -> 0);
+        System.exit(exitCode);
+
+//        if (!"test".equals(System.getProperty("spring.profiles.active")) && (!"ci".equals(System.getProperty("spring.profiles.active")))) {
+//            // Fecha o contexto do Spring e encerra a JVM com código de saída 0 (sucesso)
+//            int exitCode = SpringApplication.exit(context, () -> 0);
+//            System.exit(exitCode);
+//            //SpringApplication.exit(context, () -> 0);
+//        }
     }
 }
