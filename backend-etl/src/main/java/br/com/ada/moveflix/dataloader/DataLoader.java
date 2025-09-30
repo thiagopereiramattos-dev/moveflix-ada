@@ -63,8 +63,8 @@ public class DataLoader implements CommandLineRunner {
         filmeETLService.executarETL();
         logger.info("✅ ETL de Filmes finalizado com sucesso");
 
-        datamartViewService.atualizarViewsDB();
-        logger.info("✅ Views do datamart atualizadas com sucesso");
+//        datamartViewService.atualizarViewsDB();
+//        logger.info("✅ Views do datamart atualizadas com sucesso");
 
         logger.info("🛑 Finalizando aplicação...");
         logger.info("🔍 Profile ativo: {}", System.getProperty("spring.profiles.active"));

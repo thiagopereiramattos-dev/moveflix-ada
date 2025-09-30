@@ -1,4 +1,4 @@
-
+DROP TABLE IF EXISTS datamart.filmes_ultimos_5_anos CASCADE;
 DROP VIEW IF EXISTS datamart.filmes_ultimos_5_anos CASCADE;
 
 CREATE OR REPLACE VIEW datamart.filmes_ultimos_5_anos AS
@@ -17,7 +17,8 @@ ORDER BY f.ano_lancamento DESC, f.media_avaliacoes DESC;
 ALTER VIEW datamart.filmes_ultimos_5_anos OWNER TO postgres;
 
 
-
+-- quantidade_filmes_ultimos_5_anos
+DROP TABLE IF EXISTS datamart.quantidade_filmes_ultimos_5_anos CASCADE;
 DROP VIEW IF EXISTS datamart.quantidade_filmes_ultimos_5_anos CASCADE;
 
 CREATE OR REPLACE VIEW datamart.quantidade_filmes_ultimos_5_anos AS
@@ -32,7 +33,7 @@ ORDER BY ano_lancamento DESC;
 ALTER VIEW datamart.quantidade_filmes_ultimos_5_anos OWNER TO postgres;
 
 
-
+DROP TABLE IF EXISTS datamart.top3_filmes_por_genero CASCADE;
 DROP VIEW IF EXISTS datamart.top3_filmes_por_genero CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top3_filmes_por_genero AS
@@ -60,7 +61,7 @@ WHERE posicao <= 3;
 ALTER VIEW datamart.top3_filmes_por_genero OWNER TO postgres;
 
 
-
+DROP TABLE IF EXISTS datamart.top10_filmes_por_genero CASCADE;
 DROP VIEW IF EXISTS datamart.top10_filmes_por_genero CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top10_filmes_por_genero AS
@@ -88,7 +89,7 @@ WHERE posicao <= 10;
 ALTER VIEW datamart.top10_filmes_por_genero OWNER TO postgres;
 
 
-
+DROP TABLE IF EXISTS datamart.top15_melhores_avaliados CASCADE;
 DROP VIEW IF EXISTS datamart.top15_melhores_avaliados CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top15_melhores_avaliados AS
@@ -108,7 +109,7 @@ LIMIT 15;
 ALTER VIEW datamart.top15_melhores_avaliados OWNER TO postgres;
 
 
-
+DROP TABLE IF EXISTS datamart.top20_filmes_maior_duracao CASCADE;
 DROP VIEW IF EXISTS datamart.top20_filmes_maior_duracao CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top20_filmes_maior_duracao AS
@@ -128,7 +129,7 @@ LIMIT 20;
 ALTER VIEW datamart.top20_filmes_maior_duracao OWNER TO postgres;
 
 
-
+DROP TABLE IF EXISTS datamart.top30_filmes_mais_novos CASCADE;
 DROP VIEW IF EXISTS datamart.top30_filmes_mais_novos CASCADE;
 
 CREATE OR REPLACE VIEW datamart.top30_filmes_mais_novos AS

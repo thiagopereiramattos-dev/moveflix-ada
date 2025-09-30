@@ -42,7 +42,7 @@ jobs:
       - name: Install PostgreSQL client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      - name: Run init.sql to create schemas
+      - name: Run init.sql to create schemas and views
         env:
           PGPASSWORD: adminadmin
         run: |
