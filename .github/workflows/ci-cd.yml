@@ -64,7 +64,7 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/moveflix
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: adminadmin
-        run: mvn test -Dspring.profiles.active=test
+        run: mvn test -Dspring.profiles.active=ci
 
       - name: Save backend-api jar
         uses: actions/upload-artifact@v4
@@ -82,7 +82,7 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/moveflix
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: adminadmin
-        run: mvn test -Dspring.profiles.active=test
+        run: mvn test -Dspring.profiles.active=ci
 
       - name: Run ETL job (backend-etl)
         working-directory: backend-etl
