@@ -83,10 +83,14 @@ jobs:
 
       - name: Test backend-api container
         run: |
-          docker run -d --name backend-api-test -p 8080:8080 thiagomattos20/backend-api:latest
+          docker run -d --name backend-api-test -p 8080:8080 \
+            -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/moveflix \
+            -e SPRING_DATASOURCE_USERNAME=postgres \
+            -e SPRING_DATASOURCE_PASSWORD=adminadmin \
+            thiagomattos20/backend-api:latest
           echo "⏳ Aguardando backend-api subir..."
           for i in {1..10}; do
-            if curl --fail http://localhost:8080/actuator/health; then
+            if curl --fail http://localhost:8080/moveflix/actuator/health; then
               echo "✅ API está respondendo!"
               break
             fi
