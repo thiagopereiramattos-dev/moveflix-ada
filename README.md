@@ -156,6 +156,15 @@ Pipeline automatizado contendo:
 | Health Check | [http://localhost/moveflix/actuator/health](http://localhost/moveflix/actuator/health)  |
 | PG Admin     | (opcional, caso configurado)                                                            |
 
+
+
+| Serviço Consulta DataMart URL                                                                                     |
+ - http://localhost:8080/moveflix/filmes_insights/top20-maior-duracao
+ - http://localhost:8080/moveflix/filmes_insights/top30-mais-novos                             |
+ - http://localhost:8080/moveflix/filmes_insights/top3-por-genero
+ - http://localhost:8080/moveflix/filmes_insights/top15-geral-avaliado
+ - http://localhost:8080/moveflix/filmes_insights/listar-filmes-5-ultimos-anos
+ - http://localhost:8080/moveflix/filmes_insights/qtd-filmes-5-ultimos-anos
 ---
 
 ## 👨‍💻 Autor
