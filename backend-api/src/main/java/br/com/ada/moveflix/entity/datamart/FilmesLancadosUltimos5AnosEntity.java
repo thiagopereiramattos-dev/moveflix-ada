@@ -69,4 +69,11 @@ public class FilmesLancadosUltimos5AnosEntity {
         this.mediaAvaliacoes = mediaAvaliacoes;
     }
 
+    public Integer getAnoLancamento() {
+        return anoLancamento;
+    }
+
+    public void setAnoLancamento(Integer anoLancamento) {
+        this.anoLancamento = anoLancamento;
+    }
 }

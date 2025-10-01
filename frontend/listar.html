@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>MoveFlix - Filmes Insights</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Filmes Insights</h1>
+
+        <div class="buttons">
+			<a href="#" onclick="carregarTop10PorGenero()">Top 10 por Gênero</a>
+			<a href="#" onclick="carregarTop20MaiorDuracao()">Top 20 Maior Duração</a>
+			<a href="#" onclick="carregarTop30MaisNovos()">Top 30 Mais Novos</a>
+			<a href="#" onclick="carregarTop3PorGenero()">Top 3 por Gênero</a>
+			<a href="#" onclick="carregarTop15MaisBemAvaliados()">Top 15 Mais Bem Avaliados</a>
+			<a href="#" onclick="carregarQtdFilmes5UltimosAnos()">Qtd Filmes Últimos 5 Anos</a>
+			<a href="#" onclick="carregarFilmes5UltimosAnos()">Filmes Últimos 5 Anos</a>
+			
+        </div>
+
+        <div id="resultado">
+            <!-- Os dados carregados via JS aparecerão aqui -->
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        const API_BASE = "http://localhost:8080/moveflix/filmes_insights";
+
+        function renderTabela(data) {
+            if (!data || data.length === 0) return "<p>Nenhum dado encontrado.</p>";
+            let keys = Object.keys(data[0]);
+            let table = "<table><thead><tr>";
+            keys.forEach(k => table += `<th>${k}</th>`);
+            table += "</tr></thead><tbody>";
+            data.forEach(row => {
+                table += "<tr>";
+                keys.forEach(k => table += `<td>${row[k]}</td>`);
+                table += "</tr>";
+            });
+            table += "</tbody></table>";
+            return table;
+        }
+
+        function fetchAndRender(endpoint) {
+            fetch(`${API_BASE}/${endpoint}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("resultado").innerHTML = renderTabela(data);
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById("resultado").innerHTML = "<p>Erro ao carregar dados.</p>";
+                });
+        }
+
+        function carregarTop10PorGenero() { fetchAndRender("top10-por-genero"); }
+        function carregarTop20MaiorDuracao() { fetchAndRender("top20-maior-duracao"); }
+        function carregarTop30MaisNovos() { fetchAndRender("top30-mais-novos"); }
+        function carregarTop3PorGenero() { fetchAndRender("top3-por-genero"); }
+        function carregarTop15MaisBemAvaliados() { fetchAndRender("top15-geral-avaliado"); }
+        function carregarQtdFilmes5UltimosAnos() { fetchAndRender("qtd-filmes-5-ultimos-anos"); }
+        function carregarFilmes5UltimosAnos() { fetchAndRender("listar-filmes-5-ultimos-anos"); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>MoveFlix - Cadastrar Filme</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastrar Filme</h1>
+    <form id="form-filme">
+        <input type="text" name="nome" placeholder="Nome do Filme" required>
+        <input type="text" name="descricaoFilme" placeholder="Descrição do Filme" required>
+        <input type="number" name="idGenero" placeholder="ID do Gênero" required>
+        <input type="number" name="anoLancamento" placeholder="Ano de Lançamento" required>
+        <input type="text" name="nomeDiretor" placeholder="Nome do Diretor" required>
+        <input type="number" name="duracao" placeholder="Duração (minutos)" required>
+        <input type="number" step="0.1" name="mediaAvaliacoes" placeholder="Média Avaliações" required>
+        <button type="submit">Cadastrar</button>
+    </form>
+    <a href="index.html">Voltar</a>
+</div>
+
+<script src="script.js"></script>
+<script>
+    const form = document.getElementById('form-filme');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        data.idGenero = parseInt(data.idGenero);
+        data.anoLancamento = parseInt(data.anoLancamento);
+        data.duracao = parseInt(data.duracao);
+        data.mediaAvaliacoes = parseFloat(data.mediaAvaliacoes);
+
+        const ok = await cadastrarFilme(data);
+        if(ok) {
+            alert('Filme cadastrado com sucesso!');
+            form.reset();
+        } else {
+            alert('Erro ao cadastrar filme.');
+        }
+    });
+</script>
+</body>
+</html>
