@@ -39,6 +39,12 @@ moveflix/
 ```bash
 git clone https://github.com/seu-usuario/moveflix.git
 cd moveflix
+cd backend-etl
+mvn clean package
+
+cd ../backend-api
+mvn clean package
+cd ..    [estar na pasta moveflix]
 docker-compose up --build
 ```
 - Nginx: [http://localhost](http://localhost)

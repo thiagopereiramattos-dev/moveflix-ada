@@ -1,14 +1,35 @@
-package br.com.ada.moveflix.dto.request;
+package br.com.ada.moveflix.entity.raw;
 
-public class FilmeRequestDTO {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "filme", schema = "raw")
+public class FilmeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CO_FILME", nullable = false)
     private Integer codigo;
+
+    @Column(name = "NO_FILME", length = 200, nullable = false)
     private String nome;
+
+    @Column(name = "DESC_FILME", length = 200)
     private String descricaoFilme;
-    private Integer idGenero;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ID_GENERO")
+    private GeneroEntity genero;
+
+    @Column(name = "ANO_LANCAMENTO", length = 4)
     private Integer anoLancamento;
+
+    @Column(name = "NOME_DIRETOR", length = 200)
     private String nomeDiretor;
+    @Column(name = "DURACAO", length = 4)
     private Integer duracao;
+
+    @Column(name = "MEDIA_AVALIACOES", length = 4)
+    private Double mediaAvaliacoes;
 
     public Integer getCodigo() {
         return codigo;
@@ -34,12 +55,12 @@ public class FilmeRequestDTO {
         this.descricaoFilme = descricaoFilme;
     }
 
-    public Integer getIdGenero() {
-        return idGenero;
+    public GeneroEntity getGenero() {
+        return genero;
     }
 
-    public void setIdGenero(Integer idGenero) {
-        this.idGenero = idGenero;
+    public void setGenero(GeneroEntity genero) {
+        this.genero = genero;
     }
 
     public Integer getAnoLancamento() {
@@ -64,5 +85,13 @@ public class FilmeRequestDTO {
 
     public void setDuracao(Integer duracao) {
         this.duracao = duracao;
+    }
+
+    public Double getMediaAvaliacoes() {
+        return mediaAvaliacoes;
+    }
+
+    public void setMediaAvaliacoes(Double mediaAvaliacoes) {
+        this.mediaAvaliacoes = mediaAvaliacoes;
     }
 }
