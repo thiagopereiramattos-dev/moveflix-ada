@@ -54,24 +54,40 @@ docker-compose up --build
 
 #### 🔹 Opção 2: Usando imagens do Docker Hub
 
-**1. Subir o PostgreSQL**
+**1. Criar uma rede Docker compartilhada**
+Necessário criar caso não exista para que os containers consigam se comunicar pelos nomes (postgres-moveflix, backend-api, frontend).
 ```bash
-docker run -d --name postgres-moveflix   -e POSTGRES_DB=moveflix   -e POSTGRES_USER=postgres   -e POSTGRES_PASSWORD=adminadmin   -p 5432:5432   postgres:15
+docker network create moveflix-net
 ```
 
-**2. Rodar o ETL**
+**2. Subir o PostgreSQL**
+```bash
+docker run -d --name postgres-moveflix --network moveflix-net  -e POSTGRES_DB=moveflix   -e POSTGRES_USER=postgres   -e POSTGRES_PASSWORD=adminadmin   -p 5432:5432   postgres:15
+```
+
+**3. Rodar o ETL**
 ```bash
 docker pull thiagomattos20/backend-etl:latest
 
-docker run --rm   -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/moveflix   -e SPRING_DATASOURCE_USERNAME=postgres   -e SPRING_DATASOURCE_PASSWORD=adminadmin   thiagomattos20/backend-etl:latest
+docker run --rm    --network moveflix-net -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/moveflix   -e SPRING_DATASOURCE_USERNAME=postgres   -e SPRING_DATASOURCE_PASSWORD=adminadmin   thiagomattos20/backend-etl:latest
 ```
 
-**3. Rodar a API**
+**4. Rodar a API**
 ```bash
 docker pull thiagomattos20/backend-api:latest
 
-docker run -d --name backend-api   -p 8080:8080   -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/moveflix   -e SPRING_DATASOURCE_USERNAME=postgres   -e SPRING_DATASOURCE_PASSWORD=adminadmin   thiagomattos20/backend-api:latest
+docker run -d --name backend-api --network moveflix-net  -p 8080:8080   -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/moveflix   -e SPRING_DATASOURCE_USERNAME=postgres   -e SPRING_DATASOURCE_PASSWORD=adminadmin   thiagomattos20/backend-api:latest
 ```
+
+**5. Rodar o Frontend**
+```bash
+docker pull thiagomattos20/frontend:latest
+
+docker run -d --name frontend  --network moveflix-net -p 3000:80 thiagomattos20/frontend:latest
+
+```
+👉   Frontend disponível em:http://localhost:3000
+
 👉 API disponível em: [http://localhost:8080/moveflix](http://localhost:8080/moveflix)
 
 ---
