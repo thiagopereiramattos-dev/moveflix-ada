@@ -54,6 +54,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      # Backend API
       - name: Build backend-api
         working-directory: backend-api
         run: mvn clean package
@@ -72,6 +73,7 @@ jobs:
           name: backend-api-jar
           path: backend-api/target/*.jar
 
+      # Backend ETL
       - name: Build backend-etl
         working-directory: backend-etl
         run: mvn clean package
@@ -106,6 +108,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Baixar JARs construídos
       - name: Download backend-api jar
         uses: actions/download-artifact@v4
         with:
@@ -118,12 +121,14 @@ jobs:
           name: backend-etl-jar
           path: backend-etl/target/
 
+      # Login no Docker Hub
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # Backend API - build, teste e push
       - name: Build backend-api image
         uses: docker/build-push-action@v4
         with:
@@ -158,9 +163,18 @@ jobs:
           push: true
           tags: thiagomattos20/backend-api:latest
 
+      # Backend ETL
       - name: Build and push backend-etl image
         uses: docker/build-push-action@v4
         with:
           context: ./backend-etl
           push: true
           tags: thiagomattos20/backend-etl:latest
+
+      # Frontend - build e push
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          push: true
+          tags: thiagomattos20/frontend:latest
